@@ -1,0 +1,33 @@
+# 排除所有缓存和临时文件
+.zencoder/
+.zephyr/
+node_modules/
+cache/
+temp_slides/
+output/
+Session Storage/
+Local Storage/
+Shared Storage/
+DawnGraphiteCache/
+DawnWebGPUCache/
+GPUCache/
+Code Cache/
+Network/
+WebStorage/
+blob_storage/
+
+# 排除大型文件
+*.pyc
+*.pyo
+*.db
+*.sqlite
+*.mp4
+*.mp3
+*.wav
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# 保留知识库和脚本
+!.gitkeep

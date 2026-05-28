@@ -1,0 +1,15 @@
+# PubMed Verification | 2026-05-22
+# PMIDs: 41639868, 41350490, 41863718
+
+[OK] PMID:41639868 | Syst Rev (2026 Feb 5)
+   Efficacy and safety of stem cell therapy in patients with Diabetes Mellitus - a systematic review and meta-analysis.
+   DOI:  10.1186/s13643-025-03054-0
+
+[OK] PMID:41350490 | Immunol Res (2025 Dec 6)
+   Efficacy and safety of natural killer cell therapy for the treatment of advanced non-small cell lung cancer: A meta-analysis and systematic review.
+   DOI:  10.1007/s12026-025-09726-2
+
+[OK] PMID:41863718 | Clin Rheumatol (2026 May)
+   Efficacy and safety of intra-articular mesenchymal stem cell-based therapies in knee osteoarthritis: A systematic review and meta-analysis of randomized controlled trials.
+   DOI:  10.1007/s10067-026-08042-w
+

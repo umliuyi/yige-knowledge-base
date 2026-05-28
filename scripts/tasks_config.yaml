@@ -1,0 +1,133 @@
+# ============================================================
+# 任务调度器配置文件示例
+# 支持 YAML 和 JSON 格式
+# ============================================================
+
+# 全局设置
+settings:
+  alert_enabled: true   # 是否启用告警
+  # log_level: INFO     # 日志级别（可选）
+
+# 任务列表
+tasks:
+  # ─────────────────────────────
+  # 1. HTTP 请求任务
+  # ─────────────────────────────
+  - name: "定时健康检查"
+    type: http                    # 任务类型
+    enabled: true                # 是否启用
+    schedule: "every(30).seconds" # 调度规则
+    url: "https://httpbin.org/get"
+    method: "GET"
+    headers:
+      User-Agent: "TaskScheduler/1.0"
+    timeout: 10
+    retries: 2                   # 失败重试次数
+    retry_delay: 5               # 重试间隔（秒）
+
+  - name: "发送日报"
+    type: http
+    enabled: true
+    schedule: "every().day.at('09:00')"
+    url: "https://example.com/api/daily-report"
+    method: "POST"
+    headers:
+      Authorization: "Bearer YOUR_TOKEN_HERE"
+    body:
+      date: "2026-05-09"
+      department: "tech"
+    timeout: 30
+    retries: 1
+
+  # ─────────────────────────────
+  # 2. Shell 命令任务
+  # ─────────────────────────────
+  - name: "每日备份数据库"
+    type: shell
+    enabled: true
+    schedule: "every().day.at('02:00')"
+    command: "python scripts/backup_db.py"
+    cwd: "/path/to/project"       # 工作目录（可选）
+    env:                         # 环境变量（可选）
+      DB_HOST: "localhost"
+      DB_NAME: "production"
+    timeout: 600                 # 超时（秒）
+    retries: 1
+
+  - name: "清理临时文件"
+    type: shell
+    enabled: false               # 已禁用
+    schedule: "every(1).hours"
+    command: "rm -rf /tmp/*.log"
+    timeout: 60
+
+  # ─────────────────────────────
+  # 3. Python 函数任务
+  #    需要在 user_tasks.py 中用 @register_task 装饰
+  # ─────────────────────────────
+  - name: "发送每日报告"
+    type: python
+    enabled: true
+    schedule: "every().monday.at('08:30')"
+    function: "send_daily_report"  # 注册的函数名
+    # args: []                      # 位置参数（可选）
+    # kwargs: {}                    # 关键字参数（可选）
+    retries: 2
+
+  - name: "Hello World 任务"
+    type: python
+    enabled: true
+    schedule: "every(10).seconds"
+    function: "hello_world"
+    retries: 0
+
+  # ─────────────────────────────
+  # 4. subprocess 调用子脚本
+  #    通过 subprocess.run 调用独立 Python 脚本
+  # ─────────────────────────────
+  - name: "执行数据同步脚本"
+    type: subprocess
+    enabled: true
+    schedule: "every().day.at('06:00')"
+    script: "scripts/sync_data.py"   # 脚本路径
+    script_args:                      # 传给脚本的参数（可选）
+      - "--date"
+      - "2026-05-09"
+      - "--verbose"
+    cwd: "/path/to/project"            # 工作目录（可选）
+    timeout: 600
+    retries: 1
+
+  # ─────────────────────────────
+  # 5. 更多调度规则示例
+  # ─────────────────────────────
+  - name: "每周一凌晨跑报表"
+    type: shell
+    enabled: true
+    schedule: "every().monday.at('00:30')"
+    command: "python scripts/generate_report.py"
+    retries: 0
+
+  - name: "每5分钟检查服务状态"
+    type: http
+    enabled: true
+    schedule: "every(5).minutes"
+    url: "https://httpbin.org/status/200"
+    method: "GET"
+    timeout: 5
+    retries: 3
+    retry_delay: 3
+
+# ============================================================
+# 调度规则格式参考（基于 schedule 库）
+# ============================================================
+# every(X).seconds()      每 X 秒
+# every(X).minutes()      每 X 分钟
+# every(X).hours()        每 X 小时
+# every(X).days()         每 X 天
+# every().day.at('09:00') 每天 09:00
+# every().monday.at('09:00') 每周一 09:00
+# every().tuesday.at('18:30') 每周二 18:30
+# every().hour.at(':30')   每小时第30分钟
+# every().minute.at(':10') 每分钟第10秒
+# ============================================================
